@@ -59,6 +59,9 @@ def evaluate(test_annotation, user_submission_file, phase_codename, **kwargs):
                 user_values.append(line)
         print("Successfully loaded the User annotation file")
 
+        print("oroginal_values",original_values)
+        print("user_values", user_values)
+
         score = set(user_values).intersection(original_values).__len__()
         output['result'] = [
             {
