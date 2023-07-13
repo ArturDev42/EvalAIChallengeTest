@@ -70,8 +70,10 @@ def evaluate(test_annotation, user_submission_file, phase_codename, **kwargs):
         output['submission_result'] = output["result"][0]["train_split"]
         print("Completed evaluation for Dev Phase")
     elif phase_codename == "test":
-        print("Evaluating for Test Phase")
 
+        print("############################################")
+
+        print("Evaluating for Test Phase")
 
         print("Evaluating for Dev Phase")
 
@@ -88,6 +90,9 @@ def evaluate(test_annotation, user_submission_file, phase_codename, **kwargs):
             for line in f:
                 user_values.append(line)
         print("Successfully loaded the User annotation file")
+
+        print("user_values:", user_values)
+        print("original_values:", original_values)
 
         score = set(user_values).intersection(original_values).__len__()
 
