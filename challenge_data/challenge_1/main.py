@@ -77,24 +77,43 @@ def evaluate(test_annotation, user_submission_file, phase_codename, **kwargs):
 
     elif phase_codename == "dev":
         print("Evaluating for Dev Phase")
-        output["result"] = [
+
+
+        original_values = []
+        print("Loading Test annotation file ...")
+        with open(test_annotation, "r") as f:
+            for line in f:
+                original_values.append(line)
+        print("Successfully loaded the test annotation file")
+
+        user_values = []
+        print("Loading User annotation file ...")
+        with open(user_submission_file, "r") as f:
+            for line in f:
+                user_values.append(line)
+        print("Successfully loaded the User annotation file")
+
+        score = set(user_values).intersection(original_values).__len__()
+        output['result'] = [
             {
-                "train_split": {
-                    "Metric1": random.randint(0, 99),
-                    "Metric2": random.randint(0, 99),
-                    "Metric3": random.randint(0, 99),
-                    "Total": random.randint(0, 99),
+                "train_split":{
+                    "Metric1": score,
+                    "Metric2": 1,
+                    "Metric3": 2,
+                    "Total": 3,
                 }
+  
             },
             {
                 "test_split": {
-                    "Metric1": random.randint(0, 99),
-                    "Metric2": random.randint(0, 99),
-                    "Metric3": random.randint(0, 99),
-                    "Total": random.randint(0, 99),
+                    "Metric1": score,
+                    "Metric2": 1,
+                    "Metric3": 2,
+                    "Total": 3,
                 }
             },
         ]
+
         # To display the results in the result file
         output["submission_result"] = output["result"][0]
         print("Completed evaluation for Dev Phase")
