@@ -42,11 +42,8 @@ def evaluate(test_annotation, user_submission_file, phase_codename, **kwargs):
     """
     print(kwargs["submission_metadata"])
     output = {}
-    if phase_codename == "dev":
-        print("Evaluating for Dev Phase")
-
-
-        print("Evaluating for Dev Phase")
+    if phase_codename == "test":
+        print("Evaluating for Test Phase")
 
         original_values = []
         print("Loading Test annotation file ...")
@@ -76,10 +73,10 @@ def evaluate(test_annotation, user_submission_file, phase_codename, **kwargs):
         ]
         output['submission_metadata'] = "This submission metadata will only be shown to the Challenge Host"
         output['submission_result'] = output["result"][0]["train_split"]
-        print("Completed evaluation for Dev Phase")
+        print("Completed evaluation for Test Phase")
 
-    elif phase_codename == "test":
-        print("Evaluating for Test Phase")
+    elif phase_codename == "dev":
+        print("Evaluating for Dev Phase")
         output["result"] = [
             {
                 "train_split": {
@@ -100,5 +97,5 @@ def evaluate(test_annotation, user_submission_file, phase_codename, **kwargs):
         ]
         # To display the results in the result file
         output["submission_result"] = output["result"][0]
-        print("Completed evaluation for Test Phase")
+        print("Completed evaluation for Dev Phase")
     return output
