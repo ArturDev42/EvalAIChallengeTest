@@ -1,7 +1,7 @@
 import random
 
 
-def evaluate(test_annotation_file, user_submission_file, phase_codename, **kwargs):
+def evaluate(test_annotation, user_submission_file, phase_codename, **kwargs):
     print("Starting Evaluation.....")
     print("Submission related metadata:")
     """
@@ -44,19 +44,40 @@ def evaluate(test_annotation_file, user_submission_file, phase_codename, **kwarg
     output = {}
     if phase_codename == "dev":
         print("Evaluating for Dev Phase")
-        output["result"] = [
+
+
+        print("Evaluating for Dev Phase")
+
+        original_values = []
+        print("Loading Test annotation file ...")
+        with open(test_annotation, "r") as f:
+            for line in f:
+                original_values.append(line)
+        print("Successfully loaded the test annotation file")
+
+        user_values = []
+        print("Loading User annotation file ...")
+        with open(user_submission_file, "r") as f:
+            for line in f:
+                user_values.append(line)
+        print("Successfully loaded the User annotation file")
+
+        score = set(user_values).intersection(original_values).__len__()
+        output['result'] = [
             {
-                "train_split": {
-                    "Metric1": random.randint(0, 99),
-                    "Metric2": random.randint(0, 99),
-                    "Metric3": random.randint(0, 99),
-                    "Total": random.randint(0, 99),
+                "train_split":{
+                    "Metric1": score,
+                    "Metric2": 1,
+                    "Metric3": 2,
+                    "Total": 3,
                 }
+  
             }
         ]
-        # To display the results in the result file
-        output["submission_result"] = output["result"][0]["train_split"]
+        output['submission_metadata'] = "This submission metadata will only be shown to the Challenge Host"
+        output['submission_result'] = output["result"][0]["train_split"]
         print("Completed evaluation for Dev Phase")
+
     elif phase_codename == "test":
         print("Evaluating for Test Phase")
         output["result"] = [
